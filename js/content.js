@@ -164,7 +164,6 @@
         const idTurma = getTurmaFromSiteId();
 
         for (const idProva of idsProvas){
-            
             console.log(`Lançando Aval. ${idProva}...`);
 
             for(let r of data){
@@ -174,14 +173,14 @@
                 if(nota.search(",") == -1){
                     nota = (Number(nota)).toLocaleString('pt-BR');
                 }
-
                 const inputNota = document.querySelector(`#tbProva_${idProva}_${ra}_${idTurma}`);
-                if(inputNota && inputNota.value !== nota){
-                    inputNota.value = nota;
-                    // console.log(inputNota.value," !== ", nota);
+                if(inputNota){
+                    if(inputNota.value !== nota)
+                        inputNota.value = nota;
+                    else
+                        console.info(inputNota.value," == ", nota);
                 }else {
-                    // console.log(inputNota.value," == ", nota);
-                    console.error(`#tbProva_${idProva}_${ra}_${idTurma}`, (inputNota.value," == ", nota) );
+                    console.error(`#tbProva_${idProva}_${ra}_${idTurma}`);
                 }
             }
         }
