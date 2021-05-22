@@ -12,7 +12,7 @@
     }],
     "icons": { "16": "imgs/ifmg-chrome.png", "48": "imgs/ifmg-chrome.png" },
     "browser_action":{
-        "default_title":"Meu IFMG Notas",
+        "default_title":"meuIFMG++",
         "default_popup": "popup/popup.html",
         "persistent": true
     }
