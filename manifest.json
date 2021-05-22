@@ -1,0 +1,19 @@
+{
+    "manifest_version": 2,
+    "name": "meuIFMG++",
+    "version":"0.0.1",
+    "description": "Essa extenão adiciona nova funcionalidade ao sistema Conecta (meu.ifmg.edu.br)",
+    "author": "Luciano Vilas Boas Espiridião",
+    "content_scripts":[{
+        "matches" : ["https://meu.ifmg.edu.br/*"],
+        "all_frames": true,
+        "css": ["css/style.css","css/w3.css"],
+        "js": ["js/content.js","js/jszip_.js","js/xlsx_.js"]
+    }],
+    "icons": { "16": "imgs/ifmg-chrome.png", "48": "imgs/ifmg-chrome.png" },
+    "browser_action":{
+        "default_title":"Meu IFMG Notas",
+        "default_popup": "popup/popup.html",
+        "persistent": true
+    }
+}
