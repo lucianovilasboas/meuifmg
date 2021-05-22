@@ -176,10 +176,13 @@
                 }
 
                 const inputNota = document.querySelector(`#tbProva_${idProva}_${ra}_${idTurma}`);
-                if(inputNota) 
+                if(inputNota && inputNota.value !== nota){
                     inputNota.value = nota;
-                else 
-                    console.error(`#tbProva_${idProva}_${ra}_${idTurma}`, nota);
+                    // console.log(inputNota.value," !== ", nota);
+                }else {
+                    // console.log(inputNota.value," == ", nota);
+                    console.error(`#tbProva_${idProva}_${ra}_${idTurma}`, (inputNota.value," == ", nota) );
+                }
             }
         }
     }
