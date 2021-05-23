@@ -58,8 +58,8 @@
 
     function readCSVOrTXTFile(file) {
         var reader = new FileReader();
-        reader.onload = function(content) {
-            let data = csv2json(content.target.result, sep="\t");
+        reader.onload = function(e) {
+            let data = csv2json(e.target.result, sep="\t");
             lancarNotas(data);
         }
         reader.onerror = function (ex) {
