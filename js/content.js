@@ -35,9 +35,9 @@
         // console.log(file);
         if (!file) return;
         if (file.name.endsWith(".xlsx") || file.name.endsWith(".xls")){
-            readEXCELFile(file);
+            readExcel(file);
         }else if (file.name.endsWith(".csv") || file.name.endsWith(".txt")) {
-            readCSVOrTXTFile(file);
+            readCSV(file);
         }else{
             alert("Formato inválido para o arquivo "+ file.name+ 
                 "\n\nTente:"+
@@ -50,37 +50,23 @@
     }
 
 
-    function readEXCELFile(file) {
-        var xl2json = new ExcelToJSON();
-        xl2json.parseExcel(file);
+    function readExcel(file) {
+        new ExcelToJSON(lancarNotas).parse(file);
     } 
 
-
-    function readCSVOrTXTFile(file) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            let data = csv2json(e.target.result, sep="\t");
-            lancarNotas(data);
-        }
-        reader.onerror = function (ex) {
-            console.error(ex);
-        }
-        reader.readAsText(file);
+    function readCSV(file) {
+        new CSVToJSON(lancarNotas).parse(file);
     }
-
 
     //var csv is the CSV file with headers
     function csv2json(csv, sep) {
         var lines=csv.split("\n");
         var result = [];
-    
         // NOTE: If your columns contain commas in their values, you'll need
         // to deal with those before doing the next step 
         // (you might convert them to &&& or something, then covert them back later)
         // jsfiddle showing the issue https://jsfiddle.net/
-
         var headers=lines[0].split(sep);
-    
         for(var i=1;i<lines.length;i++){
             var obj = {};
             if (lines[i].trim() != ""){ 
@@ -91,40 +77,74 @@
                 result.push(obj);
             }
         }
-    
         return result; //JavaScript object
     }
 
 
-
-    var ExcelToJSON = function () {
-
-        this.parseExcel = function (file) {
+    var CSVToJSON = function (tratarDadosFn) {
+        this.parse = function (file) {
             var reader = new FileReader();
+            reader.onload = function (e) {
+                let data = csv2json(e.target.result, sep="\t");
+                tratarDadosFn(data);
+            }
+            reader.onerror = function (ex) {
+                console.error(ex);
+            }
+            reader.readAsText(file);
+        }
+    };    
 
+
+    var ExcelToJSON = function (tratarDadosFn) {
+        this.parse = function (file) {
+            var reader = new FileReader();
             reader.onload = function (e) {
                 var workbook = XLSX.read(e.target.result, { type: 'binary' });
                 const firstSheet = workbook.SheetNames[0];
                 var data = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
-
-                lancarNotas(data);
+                tratarDadosFn(data);
             }
-
             reader.onerror = function (ex) {
                 console.error(ex);
             }
-
             reader.readAsBinaryString(file);
         }
     };
 
-    function getTurmaFromSiteId(){
-            var tr0 = document.querySelector("tr#ctl24_xgvNotas_DXDataRow0.dxgvDataRow_Edu");
-            var str = tr0.querySelector("td span[title]").getAttribute("onClick");
-            const idTurma = str.split("&")[4].split("=")[1];    
-            return idTurma;
+    function lancarNotas(data){
+        const idsProvas = getIdProvasFromSite();
+        const idTurma = getTurmaFromSiteId();
+
+        for (const idProva of idsProvas){
+            console.log(`Lançando Aval. ${idProva}...`);
+
+            for(let r of data){
+                let ra = zeroLeftPad(r['RA'], 7);
+
+                let nota = r[`Aval._${idProva}`];
+                if(nota.search(",") == -1){
+                    nota = (Number(nota)).toLocaleString('pt-BR');
+                }
+                const inputNota = document.querySelector(`#tbProva_${idProva}_${ra}_${idTurma}`);
+                if(inputNota){
+                    if(inputNota.value !== nota)
+                        inputNota.value = nota;
+                    else
+                        console.info(ra, inputNota.value," == ", nota);
+                }else {
+                    console.error(`#tbProva_${idProva}_${ra}_${idTurma}`);
+                }
+            }
+        }
     }
 
+    function getTurmaFromSiteId(){
+        var tr0 = document.querySelector("tr#ctl24_xgvNotas_DXDataRow0.dxgvDataRow_Edu");
+        var str = tr0.querySelector("td span[title]").getAttribute("onClick");
+        const idTurma = str.split("&")[4].split("=")[1];    
+        return idTurma;
+    }
 
     function getIdProvasFromSite(){
             const th = document.querySelector("#ctl24_xgvNotas_DXHeadersRow0");
@@ -133,7 +153,7 @@
             for(const td of tds){
                 header.push(td.innerText.trim());
             }
-            return header.filter( (h) => { return h.search("Aval.") !=-1 }).map( (n) => { return n.split(' ')[1].trim() });
+            return header.filter( h => h.search("Aval.") !=-1 ).map( n => n.split(' ')[1].trim() );
     }
 
     /**
@@ -146,40 +166,13 @@
         for(const td of tds){
             header.push(td.innerText.trim());
         }
-        header     = header.filter( (h) => { return h.search("Aval.") !=-1 }).map( (n) => { return n.split(' ') });
+        header     = header.filter( h => h.search("Aval.") !=-1 ).map( n => n.split(' ') );
         let ids    = header.map( n => n[1].trim() );
         let totais = header.map( n => n[2].trim() );
         return [ids, totais];
-    }    
-
-    function lancarNotas(data){
-        const idsProvas = getIdProvasFromSite();
-        const idTurma = getTurmaFromSiteId();
-
-        for (const idProva of idsProvas){
-            console.log(`Lançando Aval. ${idProva}...`);
-
-            for(let r of data){
-                let ra = zeroLefPad(r['RA'], 7);
-
-                let nota = r[`Aval._${idProva}`];
-                if(nota.search(",") == -1){
-                    nota = (Number(nota)).toLocaleString('pt-BR');
-                }
-                const inputNota = document.querySelector(`#tbProva_${idProva}_${ra}_${idTurma}`);
-                if(inputNota){
-                    if(inputNota.value !== nota)
-                        inputNota.value = nota;
-                    else
-                        console.info(inputNota.value," == ", nota);
-                }else {
-                    console.error(`#tbProva_${idProva}_${ra}_${idTurma}`);
-                }
-            }
-        }
     }
 
-    const zeroLefPad = (num, places) => {
+    const zeroLeftPad = (num, places) => {
         var s = String(num).padStart(places, '0');
         return s.substr(s.length-places);
     }
