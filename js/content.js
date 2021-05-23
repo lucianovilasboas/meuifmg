@@ -60,9 +60,10 @@
         var reader = new FileReader();
         reader.onload = function(content) {
             let data = csv2json(content.target.result, sep="\t");
-            
-            // console.table(data);
             lancarNotas(data);
+        }
+        reader.onerror = function (ex) {
+            console.error(ex);
         }
         reader.readAsText(file);
     }
@@ -99,29 +100,21 @@
     var ExcelToJSON = function () {
 
         this.parseExcel = function (file) {
-        var reader = new FileReader();
+            var reader = new FileReader();
 
-        reader.onload = function (e) {
-            var data = e.target.result;
+            reader.onload = function (e) {
+                var workbook = XLSX.read(e.target.result, { type: 'binary' });
+                const firstSheet = workbook.SheetNames[0];
+                var data = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
 
-            var workbook = XLSX.read(data, {
-            type: 'binary'
-            });
+                lancarNotas(data);
+            }
 
-            // var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets["Plan1"]);
-            const firstSheet = workbook.SheetNames[0];
-            var data = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
-            
-            // console.table(data);
-            lancarNotas(data);
+            reader.onerror = function (ex) {
+                console.error(ex);
+            }
 
-        }
-
-        reader.onerror = function (ex) {
-            console.error(ex);
-        }
-
-        reader.readAsBinaryString(file);
+            reader.readAsBinaryString(file);
         }
     };
 
