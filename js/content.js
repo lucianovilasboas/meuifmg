@@ -12,7 +12,7 @@
             divUpload.classList.add("upload-btn-wrapper");
 
             const buttonUpload = document.createElement('button');
-            buttonUpload.innerText = "Buscar notas do arquivo...";
+            buttonUpload.innerText = "Buscar notas";
             buttonUpload.classList.add("btn");
 
             const inputFile = document.createElement('input');
@@ -24,7 +24,18 @@
             divUpload.appendChild(inputFile);
             divUpload.appendChild(buttonUpload);
 
+
+            // Add button for export do excel
+
+            const divDownload = document.createElement('div');
+            const buttonExcel = document.createElement('button');
+            buttonExcel.classList.add("btn");
+            buttonExcel.innerText = "Gerar excel";
+            buttonExcel.addEventListener('click', handleNotas2json);
+            divDownload.appendChild(buttonExcel);
+
             toolbar.appendChild(divUpload);
+            toolbar.appendChild(divDownload);
         }        
     }
 
@@ -58,14 +69,9 @@
         new CSVToJSON(lancarNotas).parse(file);
     }
 
-    //var csv is the CSV file with headers
     function csv2json(csv, sep) {
         var lines=csv.split("\n");
         var result = [];
-        // NOTE: If your columns contain commas in their values, you'll need
-        // to deal with those before doing the next step 
-        // (you might convert them to &&& or something, then covert them back later)
-        // jsfiddle showing the issue https://jsfiddle.net/
         var headers=lines[0].split(sep);
         for(var i=1;i<lines.length;i++){
             var obj = {};
@@ -120,9 +126,9 @@
             console.log(`Lançando Aval. ${idProva}...`);
 
             for(let r of data){
-                let ra = zeroLeftPad(r['RA'], 7);
+                let ra = zeroLeftPad(r['R.A.'], 7);
 
-                let nota = r[`Aval._${idProva}`];
+                let nota = String(r[`Aval._${idProva}`]);
                 if(nota.search(",") == -1){
                     nota = (Number(nota)).toLocaleString('pt-BR');
                 }
@@ -176,5 +182,109 @@
         var s = String(num).padStart(places, '0');
         return s.substr(s.length-places);
     }
+
+    // functions for export notas to excel
+
+    function getHeadersFromTableNotas(){
+        const th = document.querySelector("#ctl24_xgvNotas_DXHeadersRow0");
+        const tds = th.querySelectorAll("td.dxgvHeader_Edu");
+
+        // const tds = th.querySelectorAll('td[id*="ctl24_xgvNotas_col"]'); <<==
+
+        let header = [];
+        for(const td of tds){
+            header.push(td.innerText.trim());
+        }
+        return header
+                    //  .filter(h => h.trim() != "" && h.trim() != "Nº")
+                     .map( (h) => {
+            if (h.search("Aval.") !=-1){
+                let idP = h.split(' ')[1].trim();
+                return `Aval._${idP}`;
+            }
+            if(h == "") return "Col_0";
+            if(h == "Nº") return "Col_N";
+            return h.replaceAll(" ","_");
+        });
+    }
+
+
+    function getNomeDaTurma(ext){
+        let desc = document.querySelector("#ctl24_EduTurmasProfFiltroSelecionado1_xrpContextoEducacional_lbTurmaDisc").innerText;
+        return desc.replaceAll(" ","_") + ext;
+    }
+
+    function isEtapaRecuperacao(){
+        let inputEtapa =  document.querySelector("#ctl24_xcbEtapa_I");
+        if(inputEtapa)
+            return inputEtapa.value.search("Recupera") != -1;
+
+        return false;
+    }
+
+    function handleNotas2json(evt) {
+        evt.preventDefault();
+        alunos = []
+        
+        let table = document.querySelector("#ctl24_xgvNotas_DXMainTable");
+        let tbody = table.querySelector('tbody');
+        let trAlunos = tbody.querySelectorAll('tr[class*="dxgvDataRow_Edu"]');
+    
+        const isEtRec = isEtapaRecuperacao();
+    
+        var alunos = [];
+        trAlunos.forEach(tr => {
+            let registro = [];
+            let tds = tr.querySelectorAll('td');
+            tds.forEach((td, i) => {
+                // if(isEtRec && (i < 2)) return; // ignora as duas primeiras colunas se for em tela de recuperação
+                // if(!isEtRec && (i < 1)) return; // ignora a primeira coluna se não for em tela de recuperação
+                let input = td.querySelector('input');
+                if (input){
+                    let n = input.value.trim().replace(",",".");
+                    registro.push( n == "" ? "" : parseFloat(n));
+                }else{
+                    let text = td.innerText.trim();
+                    registro.push(text);
+                }
+            });
+            alunos.push(registro);
+        });
+    
+        const header = getHeadersFromTableNotas();
+        var alunosJson = [];
+        for(let a of alunos){
+            let alunoJson = {};
+            for(let i in a){
+                alunoJson[ header[i] ] = a[i];
+            }
+            alunosJson.push(alunoJson);
+        }
+
+        alunosJson = filterJsonObject(alunosJson, ["Col_0","Col_N"]);
+        console.table(alunosJson);
+    
+        let fileName = getNomeDaTurma(".xlsx"); 
+
+        var plan1 = XLSX.utils.json_to_sheet(alunosJson); 
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, plan1, 'Plan1');
+        XLSX.writeFile(wb, fileName);
+    }    
+
+
+    function filterJsonObject(listobj, cols){
+        let new_listobj = [];
+        for(const o of listobj){
+            let obj = {};
+            for(const k in o){
+                if (!cols.includes(k)){
+                   obj[k] = o[k];  
+                } 
+            }
+            new_listobj.push(obj);
+        }
+        return new_listobj;
+    }    
 
 })();

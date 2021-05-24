@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="csvconvert.js"></script>
+
+    <!-- add the shim first -->
+    <!-- <script type="text/javascript" src="shim.js"></script> -->
+    <!-- after the shim is referenced, add the library -->
+    <script type="text/javascript" src="xlsx.mini.js"></script> 
+
+
+</head>
+
+    <input id="file" type="file">
+    <div id="result"></div>
+
+<body>
+    
+    
+    <script>
+        let res = document.querySelector("#result");
+
+        function handleFileSelect(evt) {
+            var file = evt.target.files[0]; // FileList object
+            if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                jsonObject =  CSV.parse2json(e.target.result, "\t");
+                res.innerHTML = JSON.stringify(jsonObject);
+
+                var plan1 = XLSX.utils.json_to_sheet(jsonObject); 
+                var wb = XLSX.utils.book_new() // make Workbook of Excel
+                XLSX.utils.book_append_sheet(wb, plan1, 'Plan1') // sheetAName is name of Worksheet
+                XLSX.writeFile(wb, 'book_notas2.xlsx') // name of the file is 'book.xlsx'
+
+            }
+            reader.readAsText(file);
+            // reader.readAsBinaryString(file);
+        }
+
+        document.getElementById('file').addEventListener('change', handleFileSelect, false);  
+        
+
+
+        
+        function download_file(content, fileName, mimeType) {
+            var a = document.createElement('a');
+            mimeType = mimeType || 'application/octet-stream';
+
+            if (navigator.msSaveBlob) { // IE10
+                navigator.msSaveBlob(new Blob([content], {
+                    type: mimeType
+                }), fileName);
+            } else if (URL && 'download' in a) { //html5 A[download]
+                a.href = URL.createObjectURL(new Blob([content], {
+                    type: mimeType
+                }));
+                a.setAttribute('download', fileName);
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } else {
+                location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+            }
+        } 
+
+    </script>
+
+</body>
+</html>

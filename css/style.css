@@ -35,59 +35,80 @@ div.box {
     box-shadow: none;
     color: black;
   }
-  
 
   
-
-  .upload-btn-wrapper {
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-    cursor: pointer;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;    
-  }
   
-  .btn {
-    border: 2px solid #4CAF50;
-    color: #1d1b1b;
-    background-color: #4CAF50;
-    padding: 4px 6px;
-    border-radius: 5px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 4px;    
-  }
-  
-  .upload-btn-wrapper input[type=file] {
-    font-size: 100px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-  }
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;    
+}
 
-  .upload-btn-wrapper:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-  }
-  
-  .upload-btn-wrapper:active {
-    box-shadow: none;
-    color: black;
-  }
+.btn {
+  width: 200px;
+  margin: 1px;
+  border: 0px;
+  color: #1d1b1b;
+  background-color: #4CAF50;
+  padding: 3px 3px;
+  font-size: 14px;
+  font-weight: bold;
+  /* border-radius: 5px;     */
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;  
+}
+
+.upload-btn-wrapper input[type=file] {
+  margin: 1px;
+  border: 0px;
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.upload-btn-wrapper:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.upload-btn-wrapper:active {
+  box-shadow: none;
+  color: black;
+}
+
+.btn:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.btn:active {
+  box-shadow: none;
+  color: black;
+}
 
 
-  .body-box{
-    border: 2px solid #4CAF50;
-    border-radius: 6px;
-    width: 400px;
-    padding: 20px;
-    padding-top: 1px;
-    margin: 1px;
-  }
 
-  .body-box h1{
-    margin-top: 1px;
-    padding-top: 1px;
-    text-align: center;
-  }
+
+
+
+
+
+
+.body-box{
+  border: 2px solid #4CAF50;
+  border-radius: 6px;
+  width: 400px;
+  padding: 20px;
+  padding-top: 1px;
+  margin: 1px;
+}
+
+.body-box h1{
+  margin-top: 1px;
+  padding-top: 1px;
+  text-align: center;
+}
