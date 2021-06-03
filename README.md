@@ -20,6 +20,10 @@ Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema
 
 ![](imgs/Print_4.png)
 
+### Vejam uma demonstração
+1. [Lançamento de notas de avaliação](https://drive.google.com/file/d/1CxNok0qEwBecSeA7ShRRc1pha4BJLA3W/view?usp=sharing)
+2. [Lançamento de planos de aula](https://drive.google.com/file/d/1RD-Kt3GyJheaDhxqbP-v4NnTKyGty18m/view?usp=sharing)
+
 ## Algumas observações
 
 ### No lançamento de notas de avaliações
