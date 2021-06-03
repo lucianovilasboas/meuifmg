@@ -16,7 +16,7 @@ Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema
 ### No lançamento de planos de aula
 1. Digite seus planos em uma planilha e salve com a extensão ".xlsx" ou ".xls" ou salve em uma planilha a partir do Conecta (botão "Gerar excel").
 2. Dentro da planilha você deverá seguir algumas regrinhas para a confecção do cabaçalho (primeira linha) do arquivo (Figura 2).
-3. Para as colunas de conteúdo use o nome "Conteúdo previsto" e "Conteúdo realizado" exatamente como no Conecta. Setas Vermelhas (Figura 2). Isso é necessário para que a extensão consiga buscar corretament os conteúdos na planilha. As demais colunas não são utilizadas, mas não recomendamos sua alteração.
+3. Para as colunas de conteúdo use o nome "Conteúdo previsto" e "Conteúdo realizado" exatamente como no Conecta. Setas vermelhas (Figura 2). Isso é necessário para que a extensão consiga buscar corretamente os conteúdos na planilha. As demais colunas não são utilizadas, mas não recomendamos sua alteração.
 
 ![](imgs/Print_4.png)
 
@@ -24,12 +24,12 @@ Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema
 
 ### No lançamento de notas de avaliações
 1. Observar o valor máximo de uma avaliação. Se uma nota de algum estudante ultrapassar o valor máximo da avaliação o Conecta não permirá o salvamento das notas. Para resolver, caso essa situação venha a ocorrer, atualize a nota do(s) estudante(s) na página de lançamento do sistema ou volte na planilha e corrija a(s) nota(s), salve a planilha e faça o procedimento de importação (botão verde "Buscar notas") das notas novamente. Em seguida, basta conferir e salvar. 
-2.  Observar que o Conecta considera apenas uma casa decimal nas notas. Caso essa situação ocorra na planilha, a extensão fara o arredendamento normal da nota. Ex.: Se na planilha a nota estiver assim: 10,486, ao usar o botão "Buscar notas" essa nota será arredondada para 10,5. De qualquer forma, faça uma veirificação das notas após a importação e antes de pressionar o botão "Salvar".
+2.  Observar que o Conecta considera apenas uma casa decimal nas notas. Caso essa situação ocorra na planilha, a extensão fará o arredendamento normal da nota. Ex.: Se na planilha a nota estiver assim: "10,486", ao usar o botão "Buscar notas" essa nota será arredondada para "10,5". De qualquer forma, faça uma verificação das notas após a importação e antes de pressionar o botão "Salvar".
 
 ### No lançamento de planos de aula
-1. Essa funcionalidade fará o lançamento de todos os planos de aula registrados na planilha. Caso um plano seja inserido em uma data errada o docente poderá a qualquer momento fazer a correção/atualização dessa informação usando normalmente as funções do sistema Conecta. 
-2. O Lançamento de planos é realizado como se fosse uma pessoa digitando as informações e clicando nos botões. Isso pode levar um tempo. Não tão longo quanto uma pessoa, mas não é tão rápido quanto o lançamento de notas pois nesse caso, a cada dia de aula lançada, o botão salvar é acionado. Portanto, quando inicar o lançamento de plano de aula por essa extensão não utilize a tela até que o procedimento seja concluído. 
-3. Se, por algum motivo, precisar cancelar a ação após iniciada, basta presionar a telca "F5" ou o botão "Recarregar página" do Navegador.
+1. Essa funcionalidade fará o lançamento de todos os planos de aula registrados na planilha. Caso um plano seja inserido em uma data errada o docente poderá, após o salvamento do coenteúdo de todos os dias, fazer a correção/atualização dessa informação usando normalmente as funções do sistema Conecta. 
+2. O Lançamento de planos é realizado como se fosse uma pessoa digitando as informações e clicando nos botões. E isso levará um tempo. Não tão longo quanto uma pessoa, mas não é tão rápido quanto o lançamento de notas pois, nesse caso, a cada dia de aula lançado, o botão salvar é acionado. Portanto, quando inicar o lançamento de plano de aula por essa extensão não utilize a tela até que o procedimento seja concluído. 
+3. Se, por algum motivo, precisar cancelar a ação após iniciada, basta presionar a telca "F5" ou o botão "Recarregar página" do Navegador. O que já estiver salvo permanecerá salvo, mas podendo ser excluído ou alterado normalmente. 
 
 ## Notas da Versão 0.0.3
 
@@ -39,5 +39,4 @@ Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema
 ### Novas funcionalidades adicionadas nessa versão
 - Salvar plano de aula em uma planilha.
 - Lançar plano de aula a partir de uma planilha.
-
 
