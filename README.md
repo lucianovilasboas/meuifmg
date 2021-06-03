@@ -3,6 +3,13 @@
 Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema Conecta (meu.ifmg.edu.br).
 
 
+## Algumas justificativas para a criação desta extensão
+1. Geralmente mantemos todas as notas em uma planilha. E somente depois lançamos no sistema. 
+2. É mais simples manter a planilha atualizada do que o sistema. **Com a extesão ficou bem simples manter ambos sincronizados**. 
+3. Quando estamos lançando as notas geralmente dividimos a tela do PC: de um lado uma planilha com as notas e do outro a tela de lançamento do sistema. É muito fácil errar alguma nota de algum aluno e depois ter que refazer tudo novamente.
+4. Além de algumas outras situações que podem ocorrer quando estamos lançando as notas no sistema. Por exemplo, a conexão cai e então temos que lançar nota por nota novamente; ou passamos do tempo que o sistema permite para o lançamente e, novamente, lançar nota por nota. 
+
+
 ## Como usar
 ### No lançamento de notas de avaliações
 
@@ -20,7 +27,8 @@ Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema
 
 ![](imgs/Print_4.png)
 
-### Vejam uma demonstração
+
+### Veja uma demonstração
 1. [Lançamento de notas de avaliação](https://drive.google.com/file/d/1CxNok0qEwBecSeA7ShRRc1pha4BJLA3W/view?usp=sharing)
 2. [Lançamento de planos de aula](https://drive.google.com/file/d/1RD-Kt3GyJheaDhxqbP-v4NnTKyGty18m/view?usp=sharing)
 
@@ -28,7 +36,7 @@ Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema
 
 ### No lançamento de notas de avaliações
 1. Observar o valor máximo de uma avaliação. Se uma nota de algum estudante ultrapassar o valor máximo da avaliação o Conecta não permirá o salvamento das notas. Para resolver, caso essa situação venha a ocorrer, atualize a nota do(s) estudante(s) na página de lançamento do sistema ou volte na planilha e corrija a(s) nota(s), salve a planilha e faça o procedimento de importação (botão verde "Buscar notas") das notas novamente. Em seguida, basta conferir e salvar. 
-2.  Observar que o Conecta considera apenas uma casa decimal nas notas. Caso essa situação ocorra na planilha, a extensão fará o arredendamento normal da nota. Ex.: Se na planilha a nota estiver assim: "10,486", ao usar o botão "Buscar notas" essa nota será arredondada para "10,5". De qualquer forma, faça uma verificação das notas após a importação e antes de pressionar o botão "Salvar".
+2.  Observar que o Conecta considera apenas uma casa decimal nas notas. Caso essa situação ocorra na planilha, a extensão fará o arredendamento normal da nota. Ex.: Se na planilha a nota estiver assim: "10,486", ao usar o botão "Buscar notas" essa nota será inserida no conecta já arredondada para "10,5". De qualquer forma, faça uma breve verificação das notas após a importação e antes de pressionar o botão "Salvar".
 
 ### No lançamento de planos de aula
 1. Essa funcionalidade fará o lançamento de todos os planos de aula registrados na planilha. Caso um plano seja inserido em uma data errada o docente poderá, após o salvamento do coenteúdo de todos os dias, fazer a correção/atualização dessa informação usando normalmente as funções do sistema Conecta. 
