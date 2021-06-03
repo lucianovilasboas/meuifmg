@@ -19,4 +19,4 @@ function showDivs(n) {
 
 interval = setInterval(()=>{
     plusDivs(1)
-}, 3000);
+}, 5000);
