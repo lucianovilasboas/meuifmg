@@ -2,7 +2,7 @@
 
 Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema Conecta (meu.ifmg.edu.br).
 
-[Clique aqui para a instalação](https://chrome.google.com/webstore/detail/meuifmg%20%20/hcfgooifeoggjehkccdknglbmaddpnha?hl=pt-BR&authuser=0){:target="_blank"}
+[Clique aqui para a instalação](https://chrome.google.com/webstore/detail/meuifmg%20%20/hcfgooifeoggjehkccdknglbmaddpnha?hl=pt-BR&authuser=0){target="_blank"}
 
 
 ## Algumas justificativas para a criação desta extensão
