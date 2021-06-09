@@ -2,8 +2,6 @@
 
 Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema Conecta (meu.ifmg.edu.br).
 
-[Clique aqui para a instalação](https://chrome.google.com/webstore/detail/meuifmg%20%20/hcfgooifeoggjehkccdknglbmaddpnha?hl=pt-BR&authuser=0)
-
 
 ## Algumas justificativas para a criação desta extensão
 1. Geralmente mantemos todas as notas em uma planilha. E somente depois lançamos no sistema. 
@@ -31,9 +29,11 @@ Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema
 
 
 ### Veja uma demonstração
-1. [Instalação](https://drive.google.com/file/d/157G9kTXVyADBQ8rSIEifr_v74HgA9hdC/view?usp=sharing)
+1. [Instalação](https://drive.google.com/file/d/157G9kTXVyADBQ8rSIEifr_v74HgA9hdC/view?usp=sharing). [=> Clique aqui para a instalação <=](https://chrome.google.com/webstore/detail/meuifmg%20%20/hcfgooifeoggjehkccdknglbmaddpnha?hl=pt-BR&authuser=0)
+
 2. [Lançamento de notas de avaliação](https://drive.google.com/file/d/1CxNok0qEwBecSeA7ShRRc1pha4BJLA3W/view?usp=sharing)
 3. [Lançamento de planos de aula](https://drive.google.com/file/d/1RD-Kt3GyJheaDhxqbP-v4NnTKyGty18m/view?usp=sharing)
+
 
 ## Algumas observações
 
