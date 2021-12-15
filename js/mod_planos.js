@@ -4,7 +4,15 @@
   function planoAulasInit(){
     const tr0Planos = document.querySelector("#ctl24_xgvPlanoAula_DXDataRow0");
     if(tr0Planos){
-        const toolbar = document.querySelector("#ctl24_EduTurmasProfFiltroSelecionado1_EduToolBarFuncProf1_Td8");
+        // Para resolver um problema apontado pelo professor Pedro Henrique Pereira (campus Ponte Nova)
+        let toolbar = null;
+        let toolbar0 = document.querySelector("#ctl24_EduTurmasProfFiltroSelecionado1_EduToolBarFuncProf1_Td8");
+        if (toolbar0){
+          toolbar = toolbar0;
+        }else{
+          toolbar = document.querySelector("#ctl24_EduTurmasProfFiltroSelecionado1_EduToolBarFuncProf1_tbFunc");
+        }
+
         const divDownload = document.createElement('div');
         const buttonExcel = document.createElement('button');
         buttonExcel.classList.add("btn");
@@ -45,33 +53,15 @@
     new ExcelToJSON(lancarPlanos).parse(file);
   } 
 
-  function handlePlanos2json(evt){
+  function handlePlanos2json(evt){ 
     evt.preventDefault();
 
-    var planos = [];
-    const table = document.querySelector("table#ctl24_xgvPlanoAula_DXMainTable");
-    const trs = table.querySelectorAll("tr.dxgvDataRow_Edu");
-    trs.forEach(tr=>{
-        let obj = [];
-        tr.querySelectorAll("td").forEach(td=>{
-            obj.push(td.innerText);
-        });
-        planos.push(obj);
-    });
-
+    let planos = getPlanosFromPage();
     const header = ["0", "1", "Aula", "Data", "Início", "Término", "Conteúdo previsto", "Conteúdo realizado", "Tipo de Aula", "Reposição", "10"]; // getHeadersFromTablePlanos();
     const indexColsExclude = [0,1,10];
+    let planosJson = planos2Json(header, planos);
     
-    var planosJson = [];
-    for(let p of planos){
-        let planoJson = {};
-        for(let i in p){
-            if(i != 0 && i != 1 && i != 10 )
-                planoJson[ header[i] ] = p[i];
-        }
-        planosJson.push(planoJson);
-    }
-    // console.table(planosJson);
+    console.table(planosJson);
 
     let fileName = getNomeDaTurma("PLANOS.xlsx");
     var plan1 = XLSX.utils.json_to_sheet(planosJson); 
@@ -83,17 +73,53 @@
 })();
 
 
+function getPlanosFromPage(){
+    var planos = [];
+    const table = document.querySelector("table#ctl24_xgvPlanoAula_DXMainTable");
+    const trs = table.querySelectorAll("tr.dxgvDataRow_Edu");
+    trs.forEach(tr=>{
+        let obj = [];
+        tr.querySelectorAll("td").forEach(td=>{
+            obj.push(td.innerText);
+        });
+        planos.push(obj);
+    });
+    return planos;
+}
+
+
+function planos2Json(header, planos){
+  let planosJson = [];
+  for(let p of planos){
+    let planoJson = {};
+    for(let i in p){
+        if(i != 0 && i != 1 && i != 10 )
+            planoJson[ header[i] ] = p[i];
+    }
+    planosJson.push(planoJson);
+  }
+  return planosJson;
+}
+
+
 
 async function lancarPlanos(content) {
   for (const [idx, plano] of content.entries()) {
+
+    // if (plano["X"] && String(plano["X"]).toLowerCase() !== "x"){
+    //   console.log(`Não lançou ${plano['Aula']} [${plano['Data']}] ${plano['Início']}-${plano['Término']}`);
+    //   continue;
+    // }
+
     await abrir(idx).then( result1 => {
       return preencher(result1, plano["Conteúdo previsto"],plano["Conteúdo realizado"]).then( result2 => {
-        return salvar(result2).then( result3 => {
-        // return cancelar(result2).then( result3 => {
-          console.log(`Finalizou ${plano['Aula']} [${plano['Data']}] ${plano['Início']}-${plano['Término']}`);
+        return salvar(result2).then( result3 => { 
+        //return cancelar(result2).then( result3 => {
+          console.log(`${result3} => Lançou aula n° ${plano['Aula']} [${plano['Data']}] ${plano['Início']}-${plano['Término']}`);
         }).catch( err3 => { console.log("Err cancelou ", err3) });
       }).catch( err2 => { console.log("Err preencheu ", err2) });
     }).catch( err1 => { console.log("Err abriu ", err1) });
+
   }
   console.log('Todos os lançamentos finalizados.');
 }

@@ -55,3 +55,8 @@ Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema
 - Salvar plano de aula em uma planilha.
 - Lançar plano de aula a partir de uma planilha.
 
+## Notas da Versão 0.0.4
+
+### Correções/melhorias adicionadas
+- Correção de uma falha no módulo de planos de aula.
+
