@@ -4,10 +4,9 @@
   function planoAulasInit(){
     const tr0Planos = document.querySelector("#ctl24_xgvPlanoAula_DXDataRow0");
     if(tr0Planos){
-        // Para resolver um problema apontado pelo professor Pedro Henrique Pereira (campus Ponte Nova)
         let toolbar = null;
-        let toolbar0 = document.querySelector("#ctl24_EduTurmasProfFiltroSelecionado1_EduToolBarFuncProf1_Td8");
-        if (toolbar0){
+        let toolbar0 = document.querySelector("#ctl24_EduTurmasProfFiltroSelecionado1_EduToolBarFuncProf1_Td10");
+        if (toolbar0){ // Para resolver um problema apontado pelo professor Pedro Henrique Pereira (campus Ponte Nova)
           toolbar = toolbar0;
         }else{
           toolbar = document.querySelector("#ctl24_EduTurmasProfFiltroSelecionado1_EduToolBarFuncProf1_tbFunc");
@@ -57,10 +56,12 @@
     evt.preventDefault();
 
     let planos = getPlanosFromPage();
-    const header = ["0", "1", "Aula", "Data", "Início", "Término", "Conteúdo previsto", "Conteúdo realizado", "Tipo de Aula", "Reposição", "10"]; // getHeadersFromTablePlanos();
-    const indexColsExclude = [0,1,10];
+    const header = ["Index", "1", "Aula", "Data", "Início", "Término", "Conteúdo previsto", "Conteúdo realizado", "Tipo de Aula", "Reposição","Aula Online", "11"]; // getHeadersFromTablePlanos();
+    const indexColsExclude = [1,11];
     let planosJson = planos2Json(header, planos);
+    // let aulaToIndex = getAulaToIndex(planosJson);
     
+    // console.table(aulaToIndex);
     console.table(planosJson);
 
     let fileName = getNomeDaTurma("PLANOS.xlsx");
@@ -71,6 +72,17 @@
   }
 
 })();
+
+
+function getAulaToIndex(planosJson){
+  let aulas = planosJson.map(row =>  row["Aula"]);
+  let index = planosJson.map(row =>  row["Index"]);
+  let aulaToIndex = [];
+  for (let i = 0; i < aulas.length; i++) {
+    aulaToIndex[aulas[i]] = index[i];
+  }
+  return aulaToIndex;
+}
 
 
 function getPlanosFromPage(){
@@ -90,13 +102,15 @@ function getPlanosFromPage(){
 
 function planos2Json(header, planos){
   let planosJson = [];
-  for(let p of planos){
-    let planoJson = {};
-    for(let i in p){
-        if(i != 0 && i != 1 && i != 10 )
-            planoJson[ header[i] ] = p[i];
+  for (let i = 0; i < planos.length; i++) {
+    let rowJson = {};
+    for(let j in planos[i]){
+        if(j != 1 && j != 11 ){ // Para eliminar colunas sem conteúdo
+           if(j == 0) rowJson[ header[j] ] = i; // Para criar um indice de linhas 
+           else rowJson[ header[j] ] = planos[i][j];
+        }
     }
-    planosJson.push(planoJson);
+    planosJson.push(rowJson);
   }
   return planosJson;
 }
@@ -104,7 +118,11 @@ function planos2Json(header, planos){
 
 
 async function lancarPlanos(content) {
-  for (const [idx, plano] of content.entries()) {
+  let aulaToIndex = getAulaToIndex(content);
+  console.table(aulaToIndex);
+  for (const [index, plano] of content.entries()) { 
+
+    const idx = aulaToIndex[ plano['Aula'] ];
 
     // if (plano["X"] && String(plano["X"]).toLowerCase() !== "x"){
     //   console.log(`Não lançou ${plano['Aula']} [${plano['Data']}] ${plano['Início']}-${plano['Término']}`);
@@ -112,13 +130,13 @@ async function lancarPlanos(content) {
     // }
 
     await abrir(idx).then( result1 => {
-      return preencher(result1, plano["Conteúdo previsto"],plano["Conteúdo realizado"]).then( result2 => {
+      return preencher(result1, plano).then( result2 => {
         return salvar(result2).then( result3 => { 
         //return cancelar(result2).then( result3 => {
-          console.log(`${result3} => Lançou aula n° ${plano['Aula']} [${plano['Data']}] ${plano['Início']}-${plano['Término']}`);
-        }).catch( err3 => { console.log("Err cancelou ", err3) });
-      }).catch( err2 => { console.log("Err preencheu ", err2) });
-    }).catch( err1 => { console.log("Err abriu ", err1) });
+          console.log(`${result3} => Lançou aula n° ${plano['Aula']} [${plano['Data']}] ${plano['Início']}-${plano['Término']} => ${plano['Conteúdo previsto']}`);
+        }).catch( err3 => { console.log("Err salvar ", err3) });
+      }).catch( err2 => { console.log("Err preencher ", err2) });
+    }).catch( err1 => { console.log("Err abrir ", err1) });
 
   }
   console.log('Todos os lançamentos finalizados.');
@@ -141,12 +159,25 @@ const abrir = (i) => new Promise(resolve => {
 	
 });
 
-const preencher = (idx,conteudoPrevisto, conteudoRealizado) => new Promise(resolve => {
+const preencher = (idx, plano) => new Promise(resolve => {
+  
+  const tiposAula = ['Teórica', 'Prática', 'Laboratório', 'Estágio', 'Extensão'];
+  const tipoAulaValue = plano['Tipo de Aula'] == null ? 0 : tiposAula.indexOf( plano['Tipo de Aula'].trim() );
+  const reposicao = (plano['Reposição'] == null) ? "U" : ( (plano['Reposição'].trim() == '') ? "U" : "C" );
+  const conteudoPrevisto  = plano["Conteúdo previsto"];
+  const conteudoRealizado = plano["Conteúdo realizado"];
+
+  let tipoAulaSel = document.querySelector(`#ctl24_xgvPlanoAula_DXPEForm_ef${idx}_xcbTipoAula`);
+  if(tipoAulaSel) tipoAulaSel.value = tipoAulaValue == -1 ? 0 : tipoAulaValue ; // if -1 force 'Teórica'
+
+  let aulaReposicaoInput = document.querySelector(`#ctl24_xgvPlanoAula_DXPEForm_ef${idx}_xcbAulaRepos_S`);
+  if(aulaReposicaoInput) aulaReposicaoInput.value = reposicao;
+
 	let txta1 = document.querySelector(`#ctl24_xgvPlanoAula_DXPEForm_ef${idx}_xmConteudoPrev_I`);
-	if(txta1) txta1.value =  conteudoPrevisto; 
+	if(txta1) txta1.value =  conteudoPrevisto == null ? '' : conteudoPrevisto; 
 	
 	let txta2 = document.querySelector(`#ctl24_xgvPlanoAula_DXPEForm_ef${idx}_xmConteudoEfet_I`);
-	if(txta2) txta2.value = conteudoRealizado; 
+	if(txta2) txta2.value = conteudoRealizado == null ? '' : conteudoRealizado; 
 
 	setTimeout(() => {
 		resolve(idx);

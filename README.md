@@ -45,6 +45,9 @@ Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema
 1. Essa funcionalidade fará o lançamento de todos os planos de aula registrados na planilha. Caso um plano seja inserido em uma data errada o docente poderá, após o salvamento do coenteúdo de todos os dias, fazer a correção/atualização dessa informação usando normalmente as funções do sistema Conecta. 
 2. O Lançamento de planos é realizado como se fosse uma pessoa digitando as informações e clicando nos botões. E isso levará um tempo. Não tão longo quanto uma pessoa, mas não é tão rápido quanto o lançamento de notas pois, nesse caso, a cada dia de aula lançado, o botão salvar é acionado. Portanto, quando inicar o lançamento de plano de aula por essa extensão não utilize a tela até que o procedimento seja concluído. 
 3. Se, por algum motivo, precisar cancelar a ação após iniciada, basta presionar a telca "F5" ou o botão "Recarregar página" do Navegador. O que já estiver salvo permanecerá salvo, mas podendo ser excluído ou alterado normalmente. 
+4. A partir da versão 0.0.5 é possível o preenchimento dos campos "Tipo de Aula" e "Reposição". No entando, obeserve as seguintes condições para não haver erros. 
+a. Em "Tipo de Aula", preencha com apenas um dos valores: "Teórica", "Prática", "Laboratório", "Estágio" ou "Extensão" (sem aspas) para cada linha da planilha. Se for informado um valor diferente, automaticamente a aula do dia em questão será considerada como "Teórica" e será salvo assim.
+b. Em "Reposição", informe no campo apropriado com um "X" (sem aspas) se a aula é de reposição. Se nada for informado a aula será considerada normal (não reposição).  
 
 ## Notas da Versão 0.0.3
 
@@ -60,3 +63,11 @@ Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema
 ### Correções/melhorias adicionadas
 - Correção de uma falha no módulo de planos de aula.
 
+## Notas da Versão 0.0.5
+
+### Correções/melhorias adicionadas
+- Correção estética dos botões no módulo de lançamento de planos
+
+### Novas funcionalidades adicionadas nessa versão
+- Possibilidade de atualizar os valores campos "Tipo de Aula" e "Reposição".
+ 
