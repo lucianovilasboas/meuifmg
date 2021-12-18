@@ -116,23 +116,14 @@ function planos2Json(header, planos){
 }
 
 
-
 async function lancarPlanos(content) {
   let aulaToIndex = getAulaToIndex(content);
-  console.table(aulaToIndex);
   for (const [index, plano] of content.entries()) { 
-
     const idx = aulaToIndex[ plano['Aula'] ];
-
-    // if (plano["X"] && String(plano["X"]).toLowerCase() !== "x"){
-    //   console.log(`Não lançou ${plano['Aula']} [${plano['Data']}] ${plano['Início']}-${plano['Término']}`);
-    //   continue;
-    // }
-
     await abrir(idx).then( result1 => {
       return preencher(result1, plano).then( result2 => {
-        return salvar(result2).then( result3 => { 
-        //return cancelar(result2).then( result3 => {
+        return salvar(result2).then( result3 => { // desabilito esta linha para realizar testes
+        //return cancelar(result2).then( result3 => { // habilito esta linha para realizar testes
           console.log(`${result3} => Lançou aula n° ${plano['Aula']} [${plano['Data']}] ${plano['Início']}-${plano['Término']} => ${plano['Conteúdo previsto']}`);
         }).catch( err3 => { console.log("Err salvar ", err3) });
       }).catch( err2 => { console.log("Err preencher ", err2) });
