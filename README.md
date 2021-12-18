@@ -71,3 +71,9 @@ Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema
 ### Novas funcionalidades adicionadas nesta versão
 - Possibilidade de atualizar os valores campos "Tipo de Aula" e "Reposição".
 - **Uma observação importante!!!**. Nesta versão, foi adicionada uma nova coluna chamada "Index". Embora ela não seja diretamente importante para o docente organizar seu plano de aulas, ela não deve ser removida ou modificada. Isso afetaria a funcionalidade do lançamento de planos. Recomendo, inclusive, que nenhum dos títulos das colunas geradas seja alterado.
+
+## Notas da Versão 1.0.0
+
+### Correções/melhorias adicionadas
+- Atualização do Manifesto (manifest.json) da versão 2 para a Versão 3.
+

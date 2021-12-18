@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "meuIFMG++",
-    "version":"0.0.5",
+    "version":"1.0.0",
     "description": "Adiciona novas funcionalidades ao sistema Conecta (meu.ifmg.edu.br)",
     "author": "Luciano Vilas Boas Espiridião",
     "content_scripts":[{
