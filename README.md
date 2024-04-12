@@ -25,6 +25,12 @@ Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema
 2. Dentro da planilha você deverá seguir algumas regrinhas para a confecção do cabaçalho (primeira linha) do arquivo (Figura 2).
 3. Para as colunas de conteúdo use o nome "Conteúdo previsto" e "Conteúdo realizado" exatamente como no Conecta. Setas vermelhas (Figura 2). Isso é necessário para que a extensão consiga buscar corretamente os conteúdos na planilha. As demais colunas não são utilizadas, mas não recomendamos sua alteração.
 
+### No lançamento de frequência
+1. Acesse a tela de lancamento de frequência no conecta, selecione a Etapa e o período desejado. 
+2. Clique no botão **Exportar planilha** para gerar o arquivo em excel (formato ".xlsx"). Todos os lançamentos já realizados serão exportados para a planilha.
+3. Observe ...
+
+
 ![](imgs/Print_4.png)
 
 
@@ -48,6 +54,11 @@ Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema
 4. A partir da versão **0.0.5** é possível o preenchimento dos campos "Tipo de Aula" e "Reposição". No entando, para não cometer erros, observe as seguintes condições: 
   - 4.a. em "Tipo de Aula", preencha com apenas um dos valores: **Teórica**, **Prática**, **Laboratório**, **Estágio** ou **Extensão** para cada linha da planilha. Se for informado um valor diferente, automaticamente a aula do dia em questão será considerada como **Teórica** e será salvo assim. *Mas fique tranquilo, pois você ainda poderá editar direto no conecta*;
   - 4.b. em "Reposição", preencha com um **X** no campo apropriado se a aula for uma reposição. Se nada for informado a aula será considerada normal. 
+
+## Notas da Versão 1.0.0
+### Adição do módulo frequênca [Novo!!!]
+- Este módulo está sendo liberado em fase experimental. Podem ocorrer algumas incossistências, mas nada que comprometa os lançamentos já salvos no conecta. Por isso, é importante verificar a tela de lançamento de frequencia após a importação dos dados no excel. 
+
 
 ## Notas da Versão 0.0.3
 
