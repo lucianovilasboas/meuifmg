@@ -232,30 +232,13 @@
             final2.push(Object.assign({}, freqsJson1[i], freqsJson3[i])) // Concatena as linhas no mesmo indice 
         }
 
-
-        // console.table(freqsJson1);
-
         let fileName = getNomeDaTurmaFaltas(".xlsx");
-
-        // console.log("fileName> ", fileName)
-
         var wb = XLSX.utils.book_new();
-
-
         XLSX.utils.book_append_sheet(wb,
             XLSX.utils.json_to_sheet(final2),
             'Plan1');
 
-        // XLSX.utils.book_append_sheet(wb,
-        //     XLSX.utils.json_to_sheet(final1),
-        //     'Plan2');
-
-        // XLSX.utils.book_append_sheet(wb,
-        //     XLSX.utils.json_to_sheet(freqsJson2),
-        //     'Plan3');
-
         XLSX.writeFile(wb, fileName);
-
     }
 
 
