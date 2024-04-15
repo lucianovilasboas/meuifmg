@@ -11,6 +11,12 @@
         "js": ["js/mod_notas.js", "js/mod_planos.js", "js/mod_freq.js", "js/xlsx.mini.js"]
     }],
     "icons": { "16": "imgs/ifmg-chrome.png", "48": "imgs/ifmg-chrome.png" },
+
+    "background": {
+        "service_worker": "js/background.js",
+        "type": "module"
+      },
+    
     "action":{
         "default_title":"meuIFMG++",
         "default_popup": "popup/popup.html",
