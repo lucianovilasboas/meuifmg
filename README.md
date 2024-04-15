@@ -37,7 +37,7 @@ Uma extensão para o Google Chrome que adiciona novas funcionalidades ao sistema
 2. Clique no botão **Exportar planilha** para gerar o arquivo em excel (formato ".xlsx"). Todos os lançamentos já realizados serão exportados para a planilha. Na planilha o "x" indicará que o aluno está ausente no dia/horário e o "." indicará que o aluno está presente no dia/horário. **IMPORTANTE**: Não altere os nomes dos títulos das células das colunas. 
 3. Para fazer a manutenção da frequência marque com um "x" para ausência ou "." para presença. **IMPORTANTE**: tem que deixar o "." para presença.
 4. Clique no botão **Importar frequencia** e selecionar o arquivo da planilha para sincronizar os dados de frequência da planilha com a tela do conecta.
-5. Após conferir que os dados importados estão corretos, clique no botão  *salvar* do conecta na tela de frequência. 
+5. Após conferir que os dados importados estão corretos, clique no botão  *salvar* do conecta na tela de frequência. **Não se esqueça de que essa ação é necesária para que os lançamentos sejam salvos no Conecta**.
 
 
 ![](imgs/Print_5.png)
